@@ -1,0 +1,35 @@
+\documentclass[
+    lang=cn,
+    device=pad,
+    color=blue,
+    titlestyle=hang,
+    scheme=chinese,
+    mode=fancy,
+    cite=authoryear,
+    bibstyle=apalike,
+    toc=twocol
+]{elegantbook}
+
+\setcounter{tocdepth}{2}
+
+\begin{document}
+    % 封面设置
+    \title{机器学习笔记}
+    \subtitle{宝可梦大师课程学习笔记}
+    \author{中粮}
+    \date{\today}
+    \version{第 1 版}
+    \cover{cover/cover.jpg}
+    \logo{cover/logo.png}
+    % 生成封面
+    \maketitle
+
+    % 生成目录
+    \tableofcontents
+
+    % 文章主干部分
+    \mainmatter
+    \include{content/ch1}
+\end{document}
+
+
