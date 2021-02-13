@@ -1,1 +1,76 @@
-\chapter{Linear Regression}
+\chapter{Regression}
+
+Regression 一般用于预测任务. 比如: 预测大盘指数, 宝可梦进化后的战斗力, 等等. 那么具体应该怎么使用 Regression 
+来进行预测的任务呢? 一般可以表示成如下步骤: 
+
+\begin{enumerate}
+    \item Model: 挑一个用于 Regression 的模型, 即规定一个函数集合; 
+    \item Goodness of Function/Loss function: 设计一个可以评估函数好坏的函数;
+    \item Best Function: 找到最好的函数;
+\end{enumerate}
+
+在上面的第三步中, 比较常用的方法是 Gradient Descent. 
+
+下面举宝可梦的例子来说明上面的概念. 问题是这样的: 
+
+\begin{example}
+    Estimating the Commbat Power(CP) of a pokemon after evolution. 
+\end{example}
+
+
+\section{Model}\label{sec:Model}
+
+针对上面的问题, 我们首先可以建立一个最简单的线性模型, 该线性模型可以接收一个宝可梦的一些属性作为 Input, 通过该模型给出该宝可梦进化的 CP 值. 通过观察我们发现一个宝可梦的属性有大概这么几个: 
+
+\begin{itemize}
+    \item $x_{ cp }$: 进化前的 CP 值;
+    \item $x_{ hp }$: 进化前的 HP 值;
+    \item $x_s$: 进化前的物种;
+\end{itemize}
+
+那么我们就可以根据这些属性建立一个最简单的线性模型: 
+
+\begin{equation}
+    y = b + w_1 \cdot x_{ cp } + w_2 \cdot x_{ hp } + w_3 \cdot x_s
+\end{equation}
+
+写成通式就是: 
+
+\begin{equation}
+    y = b + \sum_i^{n} w_ix_i
+\end{equation}
+
+
+\section{Loss Function}
+
+在 \ref{sec:Model} 中, 我们根据宝可梦的具有的属性, 定义了一个可能的模型(函数集), 最终我们想要一个具体的函数, 我们可以给这个函数一个 Input, 这个函数给我们一个 Output. 这样我们就可以根据一只宝可梦进化前的属性来预测进化后的 CP 值. 要从这个函数集中找到那个具体的函数, 我们需要设计一个函数, 这个函数可以给我们反馈每次训练的结果是好还是坏, 这个函数就是 \textbf{Loss Function}. 
+
+\begin{definition}{Loss Function}{L}
+    Given a function from the function set, \textbf{Loss Function} can tell you the how bad the function is, symbol as $L(f)=L(w, b)$. 
+\end{definition}
+
+在该例子中, L(f) 可以设计成如下的样子: 
+
+\begin{equation}
+    L(f) = \sum_{n=1}^{10}\left(\hat{y}^{n}-\left(\sum w_i \cdot x_i^n\right)\right)^{2}
+\end{equation}
+
+`10' 表示只有 10 个训练样本, $\hat{y}$ 代表实际进化后的 CP 值, $b + \sum w_i \cdot x_i^n$ 代表预测的进化后的 CP 值. 我们只需要让 $L(f)$ 最小就可以找到一个最好的 Regression 函数. 即: 
+
+\begin{align}
+    f^{*} &=\arg \min _{f} L(f)
+\end{align}
+
+带入参数如下: 
+
+\begin{align}
+    w^{*}, b^{*} &=\arg \min _{w, b} L(w, b) \\
+    &=\arg \min _{w, b} \sum_{n=1}^{10}\left(\hat{y}^{n}-\left(\sum w_i \cdot x_i^n\right)\right)^{2} \label{eq:loss function}
+\end{align}
+
+理论上, 通过解 \ref{eq:loss function} 我们就可以得到最好的 Regression 函数. 
+
+
+\section{Best Function}
+
+\ref{eq:loss function} 式子比较简单, 按照宝可梦大师的说法, 通过一些简单的线性代数的知识, 就可以人工解出来最优的参数. 但是这是特殊情况, 更一般的情况是使用 Gradient Descent 方法来找到最优的参数. 

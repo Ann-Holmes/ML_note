@@ -4,4 +4,4 @@
 
 ## 学习进度
 
-- Linear Regression 
+- Regression 
